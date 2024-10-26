@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-pink: #ff3b9d;
+  --neon-yellow: #ffeb3b;
+}
+
+body {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--neon-pink);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ff69b4;
+}
+
+.prose pre {
+  background-color: #222222;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+}
+
+.prose code {
+  background-color: #222222;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.neon-text {
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.star {
+  position: absolute;
+  animation: twinkle 2s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
