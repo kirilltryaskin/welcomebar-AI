@@ -24,26 +24,27 @@ async function getInstructions(): Promise<string> {
 
 export async function getAIResponse(message: string): Promise<string> {
   try {
-    const instructions = await getInstructions();
-    
-    const completion = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: instructions },
-        { role: "user", content: message }
-      ],
-      model: "gpt-3.5-turbo",
-      temperature: 0.7,
-      max_tokens: 500,
+    const response = await fetch('http://194.87.44.115:3000/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages: [
+          { role: "system", content: await getInstructions() },
+          { role: "user", content: message }
+        ]
+      }),
     });
 
-    const response = completion.choices[0]?.message?.content;
-    if (!response) {
-      throw new Error('No response from OpenAI');
+    if (!response.ok) {
+      throw new Error('Failed to get AI response');
     }
 
-    return response;
+    const data = await response.json();
+    return data.content;
   } catch (error: any) {
-    console.error('OpenAI API Error:', error.message);
+    console.error('API Error:', error.message);
     throw new Error(error.message || 'Failed to get AI response');
   }
 }
